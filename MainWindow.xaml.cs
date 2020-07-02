@@ -20,16 +20,41 @@ namespace SubnetCalculator
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void ButtonFeedback(object sender, RoutedEventArgs e)
+     
+
+        private void SubnetMask_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Console.WriteLine("this is sender: " + sender.ToString());
+            var combobox = sender as ComboBox;
+            Console.WriteLine(combobox.SelectedItem);
         }
 
-       
+        private void SubnetBits_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var combobox = sender as ComboBox;
+            Console.WriteLine(combobox.SelectedItem);
+        }
+
+        private void MaskBits_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var combobox = sender as ComboBox;
+            Console.WriteLine(combobox.SelectedItem);
+        }
+        private void MaxSubnets_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var combobox = sender as ComboBox;
+            Console.WriteLine(combobox.SelectedItem);
+        }
+        private void HostsPerSubnet_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var combobox = sender as ComboBox;
+            Console.WriteLine(combobox.SelectedItem);
+        }
     }
 }
