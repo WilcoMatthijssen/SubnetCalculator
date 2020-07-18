@@ -1,5 +1,5 @@
 ﻿<Window 
-x:Class	= "SubnetCalculator.MainWindow"
+x:Class	= "SubnetCalculatorGUI.MainWindow"
 xmlns	= "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 xmlns:x	= "http://schemas.microsoft.com/winfx/2006/xaml"
 xmlns:d	= "http://schemas.microsoft.com/expression/blend/2008"
@@ -7,31 +7,42 @@ xmlns:mc= "http://schemas.openxmlformats.org/markup-compatibility/2006"
 xmlns:local	= "clr-namespace:SubnetCalculator"
 mc:Ignorable= "d"
 FontSize	= "24"
+FontFamily  = "Rod"
 Title		= "Subnet Calculator" 
 Height		= "700" 
 Width		= "550"
 >
 
 <Window.Resources>
-<Style TargetType="{x:Type TextBlock}">
-<Setter Property="Foreground" Value="Green"/>
+
+
+	
+	
+	
+	
+
+<!--<Style TargetType="{x:Type TextBlock}">
+<Setter Property="Foreground" Value="White"/>
 <Setter Property="VerticalAlignment" Value="Bottom"/>
 <Setter Property="Margin" Value="20 0 20 0"/>
+
+	
 </Style>
 
 <Style TargetType="{x:Type TextBox}">
 <Setter Property="TextAlignment" Value="Center"/>
 <Setter Property="Margin" Value="20 0 20 0"/>
 <Setter Property="IsReadOnly" Value="True" />
-</Style>
+			
+		</Style>-->
 </Window.Resources>
-	
 
 
-<Grid Background="WhiteSmoke" >
+
+<Grid Background="#6924D7" >
 <Grid.ColumnDefinitions>
-<ColumnDefinition/>
-<ColumnDefinition/>
+<ColumnDefinition Width="2*"/>
+			<ColumnDefinition Width="1*"/>
 </Grid.ColumnDefinitions>
 		
 <Grid.RowDefinitions>
@@ -53,147 +64,77 @@ Width		= "550"
 <RowDefinition/>
 </Grid.RowDefinitions>
 		
-<TextBlock
-Grid.Row	= "0"
-Grid.Column	= "0"
-Text		= "Network Class"
-/>
-
-<Grid Grid.Row="1" Grid.Column="0" Margin="20 0 20 0">
-<Grid.ColumnDefinitions>
-<ColumnDefinition/>
-<ColumnDefinition/>
-<ColumnDefinition/>
-</Grid.ColumnDefinitions>
-			
-<RadioButton 
-Grid.Column="0"
-Content="A"
-GroupName="Network Class"
-/>
-<RadioButton 
-Grid.Column="1"
-Content="B"
-GroupName="Network Class"
-/>
-<RadioButton 
-Grid.Column="2"
-Content="C"
-GroupName="Network Class" 
-IsChecked="True"
-/>
-
-</Grid>
-		
-		
-		
+	
 <TextBlock
 Grid.Row="0"
-Grid.Column="1"
-Text="First Octet Range"
-/>
-
-
-	
-<TextBox
-Grid.Row="1"
-Grid.Column="1"	
-Text="192 - 223"
-/>
-
-		
-
-<TextBlock
-Grid.Row="2"
 Grid.Column="0"
-Text="IP Address"
+Text="Ip address"
 />
 
 
 <TextBox
-Grid.Row="3"
+x:Name="IP"
+Grid.Row="1"
 Grid.Column="0"
 Text="192.168.0.1"
 IsReadOnly="False"
+LostFocus="IP_LostFocus"
 />
+		
 
 <TextBlock
-Grid.Row="2"
+Grid.Row="0"
 Grid.Column="1"
-Text="Hex IP Address"
+Text="Prefix"
 />
 
-<TextBox
-Grid.Row="3"
-Grid.Column="1"
-TextAlignment="Center"
-Text="C0.A8.00.01"
-/>
+<ComboBox Grid.Row="1" Grid.Column="1"  >
+			<ComboBoxItem Content="30	2 Hosts"/>
+			<ComboBoxItem Content="29	6 Hosts"/>
+			<ComboBoxItem Content="28	14 Hosts"/>
+			<ComboBoxItem Content="27	30 Hosts"/>
+			<ComboBoxItem Content="26	62 Hosts"/>
+			<ComboBoxItem Content="25	126 Hosts"/>
+			<ComboBoxItem Content="24	254 Hosts" IsSelected="True" />
+			<ComboBoxItem Content="23	510 Hosts"/>
+			<ComboBoxItem Content="22	1,022 Hosts"/>
+			<ComboBoxItem Content="21	2,046 Hosts"/>
+			<ComboBoxItem Content="20	4,094 Hosts"/>
+			<ComboBoxItem Content="19	8,190 Hosts"/>
+			<ComboBoxItem Content="18	16,382 Hosts"/>
+			<ComboBoxItem Content="17	32,766 Hosts"/>
+			<ComboBoxItem Content="16	65,534 Hosts"/>
+			<ComboBoxItem Content="15	131,070 Hosts"/>
+			<ComboBoxItem Content="14	262,142 Hosts"/>
+			<ComboBoxItem Content="13	524,286 Hosts"/>
+			<ComboBoxItem Content="12	1,048,574 Hosts"/>
+			<ComboBoxItem Content="11	2,097,150 Hosts"/>
+			<ComboBoxItem Content="10	4,194,302 Hosts"/>
+			<ComboBoxItem Content="9	8,388,606 Hosts"/>
+			<ComboBoxItem Content="8	16,777,214 Hosts"/>
+		</ComboBox>
 
 
 
-<TextBlock
-Grid.Row="4"
-Grid.Column="0"
-VerticalAlignment="Bottom"
-Text="Subnet Mask"
-Margin="20 0 20 0"
-/>
-
-
-<ComboBox
-Grid.Row="5"
-Grid.Column="0"
-Margin="20 0 20 0"
-SelectionChanged="SubnetMask_SelectionChanged"
->
-<ComboBoxItem Content="255.255.255.0" IsSelected="True" />
-<ComboBoxItem Content="255.255.255.128"/>
-<ComboBoxItem Content="255.255.255.192"/>
-<ComboBoxItem Content="255.255.255.224"/>
-<ComboBoxItem Content="255.255.255.248"/>
-<ComboBoxItem Content="255.255.255.252"/>
-</ComboBox>
-
-
-<TextBlock
-Grid.Row="4"
-Grid.Column="1"
-VerticalAlignment="Bottom"
-Text="Wildcard Mask"
-Margin="20 0 20 0"
-/>
-<TextBox
-Grid.Row="5"
-Grid.Column="1"
-Text="0.0.0.255"
-/>
 
 
 
-<TextBlock
-Grid.Row="6"
-Grid.Column="0"
-VerticalAlignment="Bottom"
-Text="Subnet Bits"
-Margin="20 0 20 0"
-/>
 
 
-<ComboBox
+
+
+
+
+<!--<ComboBox
+x:Name="SubnetBitsCbx"
 Grid.Row="7"
 Grid.Column="0"
 Margin="20 0 20 0"
-SelectionChanged="SubnetBits_SelectionChanged"
->
-<ComboBoxItem Content="0" IsSelected="True" />
-<ComboBoxItem Content="1"/>
-<ComboBoxItem Content="2"/>
-<ComboBoxItem Content="3"/>
-<ComboBoxItem Content="4"/>
-<ComboBoxItem Content="5"/>
-<ComboBoxItem Content="6"/>
-</ComboBox>
+SelectedIndex="0"
+
+/>
+
+
 
 
 <TextBlock
@@ -202,24 +143,21 @@ Grid.Column="1"
 VerticalAlignment="Bottom"
 Text="Mask Bits"
 Margin="20 0 20 0"
+
 />
 
-<ComboBox
+		<ComboBox
 Grid.Row="7"
+x:Name="MaskBitsCbx"
 Grid.Column="1"
 Margin="20 0 20 0"
-SelectionChanged="MaskBits_SelectionChanged"
->
-<ComboBoxItem Content="24" IsSelected="True" />
-<ComboBoxItem Content="25"/>
-<ComboBoxItem Content="26"/>
-<ComboBoxItem Content="27"/>
-<ComboBoxItem Content="28"/>
-<ComboBoxItem Content="30"/>
-</ComboBox>
+
+SelectedIndex="0"
+/>
+	
 
 
-<TextBlock
+		<TextBlock
 Grid.Row="8"
 Grid.Column="0"
 VerticalAlignment="Bottom"
@@ -228,45 +166,29 @@ Margin="20 0 20 0"
 />
 
 <ComboBox
+x:Name="MaxSubnetsCbx"
 Grid.Row="9"
 Grid.Column="0"
 Margin="20 0 20 0"
-SelectionChanged="MaxSubnets_SelectionChanged"
->
-<ComboBoxItem Content="1" IsSelected="True" />
-<ComboBoxItem Content="2"/>
-<ComboBoxItem Content="4"/>
-<ComboBoxItem Content="8"/>
-<ComboBoxItem Content="16"/>
-<ComboBoxItem Content="32"/>
-<ComboBoxItem Content="64"/>
-</ComboBox>
+
+/>
 
 
-
-<TextBlock
+		<TextBlock
 Grid.Row="8"
 Grid.Column="1"
 Text="Hosts per Subnet"
 />
 
-<ComboBox
+		<ComboBox
 Grid.Row="9"
 Grid.Column="1"
 Margin="20 0 20 0"
-SelectionChanged="HostsPerSubnet_SelectionChanged"
->
-<ComboBoxItem Content="254" IsSelected="True" />
-<ComboBoxItem Content="126"/>
-<ComboBoxItem Content="62"/>
-<ComboBoxItem Content="30"/>
-<ComboBoxItem Content="14"/>
-<ComboBoxItem Content="6"/>
-<ComboBoxItem Content="2"/>
-</ComboBox>
 
+x:Name="HostPSubnetCbx"
+/>
 
-<TextBlock
+		<TextBlock
 Grid.Row="10"
 Text="Hosts Address Range"
 Grid.ColumnSpan="2"
@@ -302,33 +224,10 @@ Text="192.168.0.0"
 Grid.Row="13"
 Grid.Column="1"
 Text="192.168.0.255"
-/>
+/>-->
 
 
-<TextBlock
-Grid.Row="14"
-Text="Subnet Bitmap"
-Grid.ColumnSpan="2"
-/>
 
-<TextBox
-Grid.Row="15"
-Grid.ColumnSpan="2"
-Text="10nnnnnn.nnnnnnnn.hhhhhhhh.hhhhhhhh"
-/>
-
-<!--
-<ComboBox
-Grid.Row="87"
-Grid.Column="1"
-Text="Subnet Bits"
->
-	
-<ComboBoxItem>ComboBox Item #1</ComboBoxItem>
-<ComboBoxItem IsSelected="True">ComboBox Item #2</ComboBoxItem>
-<ComboBoxItem>ComboBox Item #3</ComboBoxItem>
-</ComboBox>
--->
 
 </Grid>
 </Window>
