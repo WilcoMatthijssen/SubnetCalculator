@@ -6,228 +6,197 @@ xmlns:d	= "http://schemas.microsoft.com/expression/blend/2008"
 xmlns:mc= "http://schemas.openxmlformats.org/markup-compatibility/2006"
 xmlns:local	= "clr-namespace:SubnetCalculator"
 mc:Ignorable= "d"
-FontSize	= "24"
+FontSize	= "23"
 FontFamily  = "Rod"
 Title		= "Subnet Calculator" 
-Height		= "700" 
-Width		= "550"
+Height		= "690" 
+Width		= "420"
+
+Icon="Properties\SubnetCalc.ico"
+TextElement.FontFamily="Lucinda Console"
+
+
 >
 
 <Window.Resources>
+	
+	<ControlTemplate x:Key="FieldTemplate" TargetType="ContentControl">
+		<Border Margin="5" Background="#AA00AA00">
+			<DockPanel>
+					
+				<TextBlock 
+					Margin="5"
+					VerticalAlignment="Stretch"
+					FontWeight="Bold"
+					Text="{TemplateBinding Content}" 
+					DockPanel.Dock="Top"
+					Foreground="White"
+				/>
 
-
+				<TextBox  
+					Foreground="White"
+					Margin="5"
+					BorderBrush="Transparent"
+					VerticalContentAlignment="Center"
+					DockPanel.Dock="Bottom"
+					Background="#FF444444"
+					IsReadOnly="True" 
+					Text="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}"
+				/>
+				
+				</DockPanel>
+			</Border>
+	</ControlTemplate>
 	
 	
 	
 	
-
-<!--<Style TargetType="{x:Type TextBlock}">
-<Setter Property="Foreground" Value="White"/>
-<Setter Property="VerticalAlignment" Value="Bottom"/>
-<Setter Property="Margin" Value="20 0 20 0"/>
-
-	
-</Style>
-
-<Style TargetType="{x:Type TextBox}">
-<Setter Property="TextAlignment" Value="Center"/>
-<Setter Property="Margin" Value="20 0 20 0"/>
-<Setter Property="IsReadOnly" Value="True" />
-			
-		</Style>-->
 </Window.Resources>
 
+	<Border Background="#FF1F1F1F">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="0.1*"/>
+				<RowDefinition Height="1*"/>
+				<RowDefinition Height="2.5*"/>
+			<RowDefinition Height="2*"/>
+		</Grid.RowDefinitions>
 
 
-<Grid Background="#6924D7" >
-<Grid.ColumnDefinitions>
-<ColumnDefinition Width="2*"/>
-			<ColumnDefinition Width="1*"/>
-</Grid.ColumnDefinitions>
+
 		
-<Grid.RowDefinitions>
-<RowDefinition/>
-<RowDefinition/>
-<RowDefinition/>
-<RowDefinition/>
-<RowDefinition/>
-<RowDefinition/>
-<RowDefinition/>
-<RowDefinition/>
-<RowDefinition/>
-<RowDefinition/>
-<RowDefinition/>
-<RowDefinition/>
-<RowDefinition/>
-<RowDefinition/>
-<RowDefinition/>
-<RowDefinition/>
-</Grid.RowDefinitions>
+				<Grid Margin="5" Grid.Row="1" Grid.ColumnSpan="2">
+				<Grid.RowDefinitions>
+					<RowDefinition/>
+					<RowDefinition/>
+				</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="2.5*"/>
+				<ColumnDefinition Width="1*"/>
+			</Grid.ColumnDefinitions>
+
+				<TextBlock FontWeight="Bold" Grid.Row="0" Grid.Column="0" Text="Ip address" VerticalAlignment="Center" FontSize="35" Foreground="White" />
+					
+				<TextBox Foreground="White" BorderBrush="Transparent" Background="#FF404040" x:Name="IP" FontSize="35"
+							Grid.Row="1" Grid.Column="0" IsReadOnly="False" LostFocus="IP_LostFocus" VerticalContentAlignment="Center"
+				/>
+
+				<TextBlock FontWeight="Bold" Grid.Row="0" Grid.Column="1" 
+						   Text="Prefix" VerticalAlignment="Center"  FontSize="35" Foreground="White" />
+
+				<ComboBox Background="#004600" Grid.Row="1" Grid.Column="1" x:Name="prefixCbx"  FontSize="35" 
+						 SelectionChanged="prefixCbx_SelectionChanged" 
+						  >
+
+				<!--<ComboBoxItem>
+					<TextBlock  xml:space="preserve"><Bold>/30</Bold> &#x09; <Italic>2 IPs</Italic></TextBlock>
+				</ComboBoxItem>
+				<ComboBoxItem>
+					<TextBlock xml:space="preserve"><Bold>/29</Bold> &#x09; <Italic>6 IPs</Italic></TextBlock>
+				</ComboBoxItem>
+				<ComboBoxItem>
+					<TextBlock xml:space="preserve" ><Bold>/28</Bold> &#x09; <Italic>14 IPs</Italic></TextBlock>
+				</ComboBoxItem>
+				<ComboBoxItem>
+					<TextBlock xml:space="preserve" ><Bold>/27</Bold> &#x09; <Italic>30 IPs</Italic></TextBlock>
+				</ComboBoxItem>
+				<ComboBoxItem>
+					<TextBlock xml:space="preserve" ><Bold>/26</Bold> &#x09; <Italic>62 IPs</Italic></TextBlock>
+				</ComboBoxItem>
+				<ComboBoxItem>
+					<TextBlock xml:space="preserve" ><Bold>/25</Bold> &#x09; <Italic>126 IPs</Italic></TextBlock>
+				</ComboBoxItem>
+				<ComboBoxItem IsSelected="True" >
+					<TextBlock xml:space="preserve" ><Bold>/24</Bold> &#x09; <Italic>254 IPs</Italic></TextBlock>
+				</ComboBoxItem>
+				<ComboBoxItem>
+					<TextBlock xml:space="preserve" ><Bold>/23</Bold> &#x09; <Italic>510 IPs</Italic></TextBlock>
+				</ComboBoxItem>
+				<ComboBoxItem>
+					<TextBlock xml:space="preserve" ><Bold>/22</Bold> &#x09; <Italic>1,022 IPs</Italic></TextBlock>
+				</ComboBoxItem>
+				<ComboBoxItem>
+					<TextBlock xml:space="preserve" ><Bold>/21</Bold> &#x09; <Italic>2,046 IPs</Italic></TextBlock>
+				</ComboBoxItem>
+				<ComboBoxItem>
+					<TextBlock xml:space="preserve" ><Bold>/20</Bold> &#x09; <Italic>4,094 IPs</Italic></TextBlock>
+				</ComboBoxItem>
+				<ComboBoxItem>
+					<TextBlock xml:space="preserve" ><Bold>/19</Bold> &#x09; <Italic>8,190 IPs</Italic></TextBlock>
+				</ComboBoxItem>
+				<ComboBoxItem>
+					<TextBlock xml:space="preserve" ><Bold>/18</Bold> &#x09; <Italic>16,382 IPs</Italic></TextBlock>
+				</ComboBoxItem>
+				<ComboBoxItem>
+					<TextBlock xml:space="preserve" ><Bold>/17</Bold> &#x09; <Italic>32,766 IPs</Italic></TextBlock>
+				</ComboBoxItem>
+				<ComboBoxItem>
+					<TextBlock xml:space="preserve" ><Bold>/16</Bold> &#x09; <Italic>65,534 IPs</Italic></TextBlock>
+				</ComboBoxItem>
+				<ComboBoxItem>
+					<TextBlock xml:space="preserve" ><Bold>/15</Bold> &#x09; <Italic>131,070 IPs</Italic></TextBlock>
+				</ComboBoxItem>
+				<ComboBoxItem>
+					<TextBlock xml:space="preserve" ><Bold>/14</Bold> &#x09; <Italic>262,142 IPs</Italic></TextBlock>
+				</ComboBoxItem>
+				<ComboBoxItem>
+					<TextBlock xml:space="preserve" ><Bold>/13</Bold> &#x09; <Italic>524,286 IPs</Italic></TextBlock>
+				</ComboBoxItem>
+				<ComboBoxItem>
+					<TextBlock xml:space="preserve" ><Bold>/12</Bold> &#x09; <Italic>1,048,574 IPs</Italic></TextBlock>
+				</ComboBoxItem>
+				<ComboBoxItem>
+					<TextBlock xml:space="preserve" ><Bold>/11</Bold> &#x09; <Italic>2,097,150 IPs</Italic></TextBlock>
+				</ComboBoxItem>
+				<ComboBoxItem>
+					<TextBlock xml:space="preserve" ><Bold>/10</Bold> &#x09; <Italic>4,194,302 IPs</Italic></TextBlock>
+				</ComboBoxItem>
+				<ComboBoxItem>
+					<TextBlock xml:space="preserve" ><Bold>/9</Bold> &#x09; <Italic>8,388,606 IPs</Italic></TextBlock>
+				</ComboBoxItem>
+				<ComboBoxItem>
+					<TextBlock xml:space="preserve" ><Bold>/8</Bold> &#x09; <Italic>16,777,214 IPs</Italic></TextBlock>
+				</ComboBoxItem>-->
+
+			</ComboBox>
+
+			</Grid>
 		
-	
-<TextBlock
-Grid.Row="0"
-Grid.Column="0"
-Text="Ip address"
-/>
+
+			
+				<Grid Grid.Row="2">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition/>
+						<ColumnDefinition/>
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition/>
+						<RowDefinition/>
+						<RowDefinition/>
+					</Grid.RowDefinitions>
 
 
-<TextBox
-x:Name="IP"
-Grid.Row="1"
-Grid.Column="0"
-Text="192.168.0.1"
-IsReadOnly="False"
-LostFocus="IP_LostFocus"
-/>
-		
+				<ContentControl Grid.Row="0" Grid.Column="0"
+							Content="Network ID"   x:Name="NetworkIDUI" Template="{StaticResource FieldTemplate}"/>
+				<ContentControl Grid.Row="0" Grid.Column="1" 		
+							Content="Broadcast IP" x:Name="BroadcastUI" Template="{StaticResource FieldTemplate}"/>
 
-<TextBlock
-Grid.Row="0"
-Grid.Column="1"
-Text="Prefix"
-/>
-
-<ComboBox Grid.Row="1" Grid.Column="1"  >
-			<ComboBoxItem Content="30	2 Hosts"/>
-			<ComboBoxItem Content="29	6 Hosts"/>
-			<ComboBoxItem Content="28	14 Hosts"/>
-			<ComboBoxItem Content="27	30 Hosts"/>
-			<ComboBoxItem Content="26	62 Hosts"/>
-			<ComboBoxItem Content="25	126 Hosts"/>
-			<ComboBoxItem Content="24	254 Hosts" IsSelected="True" />
-			<ComboBoxItem Content="23	510 Hosts"/>
-			<ComboBoxItem Content="22	1,022 Hosts"/>
-			<ComboBoxItem Content="21	2,046 Hosts"/>
-			<ComboBoxItem Content="20	4,094 Hosts"/>
-			<ComboBoxItem Content="19	8,190 Hosts"/>
-			<ComboBoxItem Content="18	16,382 Hosts"/>
-			<ComboBoxItem Content="17	32,766 Hosts"/>
-			<ComboBoxItem Content="16	65,534 Hosts"/>
-			<ComboBoxItem Content="15	131,070 Hosts"/>
-			<ComboBoxItem Content="14	262,142 Hosts"/>
-			<ComboBoxItem Content="13	524,286 Hosts"/>
-			<ComboBoxItem Content="12	1,048,574 Hosts"/>
-			<ComboBoxItem Content="11	2,097,150 Hosts"/>
-			<ComboBoxItem Content="10	4,194,302 Hosts"/>
-			<ComboBoxItem Content="9	8,388,606 Hosts"/>
-			<ComboBoxItem Content="8	16,777,214 Hosts"/>
-		</ComboBox>
+				<ContentControl Grid.Row="1" Grid.ColumnSpan="2" 
+							Content="Network IP range" x:Name="IpRangeUI" Template="{StaticResource FieldTemplate}" />
+				
+			<ContentControl Grid.Row="2" Grid.Column="0"
+							Content="Subnet mask" 	x:Name="SubnetUI"   Template="{StaticResource FieldTemplate}" />
+				<ContentControl Grid.Row="2" Grid.Column="1"  
+							Content="Wildcard mask" x:Name="WildcardUI" Template="{StaticResource FieldTemplate}"/>
+				</Grid>
 
 
+			<Slider Grid.Row="3"  VerticalAlignment="Center" 
+					TickFrequency="1"
+					TickPlacement="BottomRight"
+					IsSnapToTickEnabled="True"
+					Minimum="8"  Maximum="31"/>
 
-
-
-
-
-
-
-
-
-
-<!--<ComboBox
-x:Name="SubnetBitsCbx"
-Grid.Row="7"
-Grid.Column="0"
-Margin="20 0 20 0"
-SelectedIndex="0"
-
-/>
-
-
-
-
-<TextBlock
-Grid.Row="6"
-Grid.Column="1"
-VerticalAlignment="Bottom"
-Text="Mask Bits"
-Margin="20 0 20 0"
-
-/>
-
-		<ComboBox
-Grid.Row="7"
-x:Name="MaskBitsCbx"
-Grid.Column="1"
-Margin="20 0 20 0"
-
-SelectedIndex="0"
-/>
-	
-
-
-		<TextBlock
-Grid.Row="8"
-Grid.Column="0"
-VerticalAlignment="Bottom"
-Text="Maximum Subnets"
-Margin="20 0 20 0"
-/>
-
-<ComboBox
-x:Name="MaxSubnetsCbx"
-Grid.Row="9"
-Grid.Column="0"
-Margin="20 0 20 0"
-
-/>
-
-
-		<TextBlock
-Grid.Row="8"
-Grid.Column="1"
-Text="Hosts per Subnet"
-/>
-
-		<ComboBox
-Grid.Row="9"
-Grid.Column="1"
-Margin="20 0 20 0"
-
-x:Name="HostPSubnetCbx"
-/>
-
-		<TextBlock
-Grid.Row="10"
-Text="Hosts Address Range"
-Grid.ColumnSpan="2"
-/>
-
-<TextBox
-Grid.Row="11"
-Grid.ColumnSpan="2"
-Text="192.168.0.1 - 192.168.0.254"
-/>
-	
-<TextBlock
-Grid.Row="12"
-Grid.Column="0"
-Text="Subnet ID"
-/>
-<TextBlock
-Grid.Row="12"
-Grid.Column="1"
-Text="Broadcast Address"
-/>
-
-<TextBox
-Grid.Row="13"
-Grid.Column="0"
-Text="192.168.0.0"
-/>
-
-
-	
-
-<TextBox
-Grid.Row="13"
-Grid.Column="1"
-Text="192.168.0.255"
-/>-->
-
-
-
-
-</Grid>
+		</Grid>
+	</Border>
 </Window>

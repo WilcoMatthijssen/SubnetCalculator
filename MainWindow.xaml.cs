@@ -19,15 +19,15 @@ using SubnetCalculator;
 namespace SubnetCalculatorGUI
 {
 
-    public class ComboboxItem
+    public class Cbx
     {
-        UInt16 num;
-        public string Text { get; set; }
-        public object Value { get; set; }
-
+        UInt16 num=420;
+        public string Text { get { return String.Format("/{0} \t {1} IPs", num, (1u << (32 - (int)num) )-2); } }
+        public UInt16 Value { get { return num; } set { num = (UInt16)value; } }
+ 
         public override string ToString()
         {
-            return Text;
+            return "/" + num.ToString(); 
         }
     }
 
@@ -44,6 +44,19 @@ namespace SubnetCalculatorGUI
         public MainWindow()
         {
             InitializeComponent();
+            for (UInt16 i = 8; i <= 30; ++i)
+            {
+                Cbx item = new Cbx();
+                item.Value = i;
+                prefixCbx.Items.Add(item);
+            }
+            prefixCbx.SelectedIndex = 0;
+
+
+            IP.Text = calc.Ip;
+            Refresh();
+            // MessageBox.Show((prefixCbx.SelectedItem as ComboboxItem).Value.ToString());
+
         }
 
         SubnetCalculator calc = new SubnetCalculator();
@@ -53,6 +66,29 @@ namespace SubnetCalculatorGUI
             var textbox = sender as TextBox;
             calc.Ip = textbox.Text;
             textbox.Text = calc.Ip;
+            Refresh();
+            
+        }
+
+
+        private void Refresh()
+        {
+            NetworkIDUI.Tag = calc.NetworkID;
+            BroadcastUI.Tag = calc.BroadCast;
+
+            IpRangeUI.Tag = calc.FirstIp + " - " + calc.LastIp;
+            
+            
+            SubnetUI.Tag = calc.SubnetMask;
+            WildcardUI.Tag = calc.WildcardMask;
+           
+            
+        }
+
+        private void prefixCbx_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var item = sender as ComboBox;
+            Console.WriteLine(item.SelectedItem);
         }
     }
 }
