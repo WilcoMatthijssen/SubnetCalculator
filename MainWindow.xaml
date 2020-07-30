@@ -6,197 +6,150 @@ xmlns:d	= "http://schemas.microsoft.com/expression/blend/2008"
 xmlns:mc= "http://schemas.openxmlformats.org/markup-compatibility/2006"
 xmlns:local	= "clr-namespace:SubnetCalculator"
 mc:Ignorable= "d"
-FontSize	= "23"
-FontFamily  = "Rod"
+
+FontFamily  = "Lucinda Console"
 Title		= "Subnet Calculator" 
 Height		= "690" 
 Width		= "420"
+	
+MinHeight="500"
+MinWidth="360"
+	
 
 Icon="Properties\SubnetCalc.ico"
 TextElement.FontFamily="Lucinda Console"
-
-
 >
 
+	
+<!--		STYLE DEFINITIONS		-->
+	
 <Window.Resources>
-	
-	<ControlTemplate x:Key="FieldTemplate" TargetType="ContentControl">
-		<Border Margin="5" Background="#AA00AA00">
-			<DockPanel>
-					
-				<TextBlock 
-					Margin="5"
-					VerticalAlignment="Stretch"
-					FontWeight="Bold"
-					Text="{TemplateBinding Content}" 
-					DockPanel.Dock="Top"
-					Foreground="White"
-				/>
 
-				<TextBox  
-					Foreground="White"
-					Margin="5"
-					BorderBrush="Transparent"
-					VerticalContentAlignment="Center"
-					DockPanel.Dock="Bottom"
-					Background="#FF444444"
-					IsReadOnly="True" 
-					Text="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}"
-				/>
-				
-				</DockPanel>
-			</Border>
-	</ControlTemplate>
+	<Style x:Key="propValueStyle"  TargetType="{x:Type TextBox}">
+		<Setter Property="Foreground"  Value="#BBFFFFFF"/>
+		<Setter Property="VerticalAlignment" Value="Center"/>
+		<Setter Property="Background" Value="#44444444"/>
+		<Setter Property="IsReadOnly" Value="True"/>
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="Padding" Value="5"/>
+		<Setter Property="FontSize" Value="18"/>
+		<Setter Property="Margin" Value="10,0"/>
+	</Style>
 	
+	<Style x:Key="propNameStyle"  TargetType="{x:Type Label}" >
+		<Setter Property="Foreground" Value="#88FFFFFF" />
+		<Setter Property="Margin" Value="5"/>
+		<Setter Property="VerticalAlignment" Value="Center"/>
+		<Setter Property="FontSize" Value="18"/>
+	</Style>
 	
+	<Style x:Key="inputNameStyle"  TargetType="{x:Type Label}" BasedOn="{StaticResource propNameStyle}" >
+		<Setter Property="FontSize" Value="30"/>
+		<Setter Property="Foreground" Value="Purple"/>
+		<Setter Property="FontWeight" Value="Bold"/>
+	</Style>
+
 	
-	
+	<Style x:Key="inputValueStyle"  TargetType="{x:Type TextBox}" BasedOn="{StaticResource propValueStyle}" >
+		<Setter Property="FontSize" Value="30"/>
+		<Setter Property="Foreground" Value="Black"/>
+		<Setter Property="IsReadOnly" Value="False"/>
+		<EventSetter Event="PreviewTextInput" Handler="InputPreviewTextInput"/>
+		<EventSetter Event="TextChanged" Handler="InputChanged"/>
+	</Style>
+
 </Window.Resources>
 
-	<Border Background="#FF1F1F1F">
+<!--		VISUAL DEFINITIONS			-->
+	
+<Border Background="White">
+<DockPanel>
+
+	<!--		INPUT DEFINITIONS		-->
+	<Border Margin="5"   DockPanel.Dock="Top">
 	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="0.1*"/>
-				<RowDefinition Height="1*"/>
-				<RowDefinition Height="2.5*"/>
-			<RowDefinition Height="2*"/>
-		</Grid.RowDefinitions>
+	<Grid.ColumnDefinitions>
+		<ColumnDefinition Width="1.4*"/>
+		<ColumnDefinition Width="0.1*"/>
+		<ColumnDefinition Width="1*"/>
+	</Grid.ColumnDefinitions>
+	<Grid.RowDefinitions>
+		<RowDefinition/>
+		<RowDefinition/>
+		<RowDefinition/>
+	</Grid.RowDefinitions>
 
+		<Label  Content="Ip address" Grid.Row="0" Grid.ColumnSpan="2" Target="{Binding IP}"		Style="{StaticResource inputNameStyle}" />
+		<Label Content="Prefix"		 Grid.Row="0" Grid.Column="2"	  Target="{Binding Prefix}" Style="{StaticResource inputNameStyle}" />
 
-
-		
-				<Grid Margin="5" Grid.Row="1" Grid.ColumnSpan="2">
-				<Grid.RowDefinitions>
-					<RowDefinition/>
-					<RowDefinition/>
-				</Grid.RowDefinitions>
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="2.5*"/>
-				<ColumnDefinition Width="1*"/>
-			</Grid.ColumnDefinitions>
-
-				<TextBlock FontWeight="Bold" Grid.Row="0" Grid.Column="0" Text="Ip address" VerticalAlignment="Center" FontSize="35" Foreground="White" />
-					
-				<TextBox Foreground="White" BorderBrush="Transparent" Background="#FF404040" x:Name="IP" FontSize="35"
-							Grid.Row="1" Grid.Column="0" IsReadOnly="False" LostFocus="IP_LostFocus" VerticalContentAlignment="Center"
-				/>
-
-				<TextBlock FontWeight="Bold" Grid.Row="0" Grid.Column="1" 
-						   Text="Prefix" VerticalAlignment="Center"  FontSize="35" Foreground="White" />
-
-				<ComboBox Background="#004600" Grid.Row="1" Grid.Column="1" x:Name="prefixCbx"  FontSize="35" 
-						 SelectionChanged="prefixCbx_SelectionChanged" 
-						  >
-
-				<!--<ComboBoxItem>
-					<TextBlock  xml:space="preserve"><Bold>/30</Bold> &#x09; <Italic>2 IPs</Italic></TextBlock>
-				</ComboBoxItem>
-				<ComboBoxItem>
-					<TextBlock xml:space="preserve"><Bold>/29</Bold> &#x09; <Italic>6 IPs</Italic></TextBlock>
-				</ComboBoxItem>
-				<ComboBoxItem>
-					<TextBlock xml:space="preserve" ><Bold>/28</Bold> &#x09; <Italic>14 IPs</Italic></TextBlock>
-				</ComboBoxItem>
-				<ComboBoxItem>
-					<TextBlock xml:space="preserve" ><Bold>/27</Bold> &#x09; <Italic>30 IPs</Italic></TextBlock>
-				</ComboBoxItem>
-				<ComboBoxItem>
-					<TextBlock xml:space="preserve" ><Bold>/26</Bold> &#x09; <Italic>62 IPs</Italic></TextBlock>
-				</ComboBoxItem>
-				<ComboBoxItem>
-					<TextBlock xml:space="preserve" ><Bold>/25</Bold> &#x09; <Italic>126 IPs</Italic></TextBlock>
-				</ComboBoxItem>
-				<ComboBoxItem IsSelected="True" >
-					<TextBlock xml:space="preserve" ><Bold>/24</Bold> &#x09; <Italic>254 IPs</Italic></TextBlock>
-				</ComboBoxItem>
-				<ComboBoxItem>
-					<TextBlock xml:space="preserve" ><Bold>/23</Bold> &#x09; <Italic>510 IPs</Italic></TextBlock>
-				</ComboBoxItem>
-				<ComboBoxItem>
-					<TextBlock xml:space="preserve" ><Bold>/22</Bold> &#x09; <Italic>1,022 IPs</Italic></TextBlock>
-				</ComboBoxItem>
-				<ComboBoxItem>
-					<TextBlock xml:space="preserve" ><Bold>/21</Bold> &#x09; <Italic>2,046 IPs</Italic></TextBlock>
-				</ComboBoxItem>
-				<ComboBoxItem>
-					<TextBlock xml:space="preserve" ><Bold>/20</Bold> &#x09; <Italic>4,094 IPs</Italic></TextBlock>
-				</ComboBoxItem>
-				<ComboBoxItem>
-					<TextBlock xml:space="preserve" ><Bold>/19</Bold> &#x09; <Italic>8,190 IPs</Italic></TextBlock>
-				</ComboBoxItem>
-				<ComboBoxItem>
-					<TextBlock xml:space="preserve" ><Bold>/18</Bold> &#x09; <Italic>16,382 IPs</Italic></TextBlock>
-				</ComboBoxItem>
-				<ComboBoxItem>
-					<TextBlock xml:space="preserve" ><Bold>/17</Bold> &#x09; <Italic>32,766 IPs</Italic></TextBlock>
-				</ComboBoxItem>
-				<ComboBoxItem>
-					<TextBlock xml:space="preserve" ><Bold>/16</Bold> &#x09; <Italic>65,534 IPs</Italic></TextBlock>
-				</ComboBoxItem>
-				<ComboBoxItem>
-					<TextBlock xml:space="preserve" ><Bold>/15</Bold> &#x09; <Italic>131,070 IPs</Italic></TextBlock>
-				</ComboBoxItem>
-				<ComboBoxItem>
-					<TextBlock xml:space="preserve" ><Bold>/14</Bold> &#x09; <Italic>262,142 IPs</Italic></TextBlock>
-				</ComboBoxItem>
-				<ComboBoxItem>
-					<TextBlock xml:space="preserve" ><Bold>/13</Bold> &#x09; <Italic>524,286 IPs</Italic></TextBlock>
-				</ComboBoxItem>
-				<ComboBoxItem>
-					<TextBlock xml:space="preserve" ><Bold>/12</Bold> &#x09; <Italic>1,048,574 IPs</Italic></TextBlock>
-				</ComboBoxItem>
-				<ComboBoxItem>
-					<TextBlock xml:space="preserve" ><Bold>/11</Bold> &#x09; <Italic>2,097,150 IPs</Italic></TextBlock>
-				</ComboBoxItem>
-				<ComboBoxItem>
-					<TextBlock xml:space="preserve" ><Bold>/10</Bold> &#x09; <Italic>4,194,302 IPs</Italic></TextBlock>
-				</ComboBoxItem>
-				<ComboBoxItem>
-					<TextBlock xml:space="preserve" ><Bold>/9</Bold> &#x09; <Italic>8,388,606 IPs</Italic></TextBlock>
-				</ComboBoxItem>
-				<ComboBoxItem>
-					<TextBlock xml:space="preserve" ><Bold>/8</Bold> &#x09; <Italic>16,777,214 IPs</Italic></TextBlock>
-				</ComboBoxItem>-->
-
-			</ComboBox>
-
-			</Grid>
-		
-
-			
-				<Grid Grid.Row="2">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition/>
-						<ColumnDefinition/>
-					</Grid.ColumnDefinitions>
-					<Grid.RowDefinitions>
-						<RowDefinition/>
-						<RowDefinition/>
-						<RowDefinition/>
-					</Grid.RowDefinitions>
-
-
-				<ContentControl Grid.Row="0" Grid.Column="0"
-							Content="Network ID"   x:Name="NetworkIDUI" Template="{StaticResource FieldTemplate}"/>
-				<ContentControl Grid.Row="0" Grid.Column="1" 		
-							Content="Broadcast IP" x:Name="BroadcastUI" Template="{StaticResource FieldTemplate}"/>
-
-				<ContentControl Grid.Row="1" Grid.ColumnSpan="2" 
-							Content="Network IP range" x:Name="IpRangeUI" Template="{StaticResource FieldTemplate}" />
-				
-			<ContentControl Grid.Row="2" Grid.Column="0"
-							Content="Subnet mask" 	x:Name="SubnetUI"   Template="{StaticResource FieldTemplate}" />
-				<ContentControl Grid.Row="2" Grid.Column="1"  
-							Content="Wildcard mask" x:Name="WildcardUI" Template="{StaticResource FieldTemplate}"/>
-				</Grid>
-
-
-			<Slider Grid.Row="3"  VerticalAlignment="Center" 
-					TickFrequency="1"
-					TickPlacement="BottomRight"
-					IsSnapToTickEnabled="True"
-					Minimum="8"  Maximum="31"/>
-
-		</Grid>
+		<TextBox	x:Name="IP"		Grid.Row="1"				 Style="{StaticResource inputValueStyle}" />
+		<TextBlock	Text="/"		Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" FontSize="30"/>
+		<TextBox	x:Name="Prefix" Grid.Row="1" Grid.Column="2" Style="{StaticResource inputValueStyle}" MaxLength="2"/>
+	
+		<Slider Grid.Row="2"  Grid.ColumnSpan="3" 
+			VerticalAlignment="Center" 
+			TickFrequency="1"
+			TickPlacement="BottomRight"
+			IsSnapToTickEnabled="True"
+			Minimum="8"  Maximum="30"
+			ValueChanged="Slider_ValueChanged"
+			x:Name="PrefixSlider"
+			Value="24"
+			Margin="20"
+		/>
+	</Grid>
 	</Border>
+			
+	<!--		PROPERTY DEFINITIONS		-->
+	<Border  DockPanel.Dock="Bottom" Background="Purple"  CornerRadius="10" Margin="10">
+	<Grid >
+
+		<Grid.RowDefinitions>
+			<RowDefinition/>
+			<RowDefinition/>
+			<RowDefinition/>
+			<RowDefinition/>
+			<RowDefinition/>
+			<RowDefinition/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition/>
+			<ColumnDefinition/>
+		</Grid.ColumnDefinitions>
+
+
+		<Label Content="Network ID:" Style="{StaticResource propNameStyle}" Grid.Column="0" Grid.Row="0" 
+			Target="{Binding txtbxNetworkID}" ToolTip="Network ID is the portion of an IP address that identifies the TCP/IP network on which a host resides."/>
+		<TextBox x:Name="txtbxNetworkID" Style="{StaticResource propValueStyle}"  Grid.Column="1" Grid.Row="0"	/>
+
+		<Label Content="Broadcast IP:" Style="{StaticResource propNameStyle}" Grid.Column="0" Grid.Row="1" 
+			Target="{Binding txtbxBroadcast}" ToolTip="Broadcast address is the last address in the network, and it is used for addressing all the nodes in the network at the same time."/>
+		<TextBox x:Name="txtbxBroadcast" Style="{StaticResource propValueStyle}" Grid.Column="1" Grid.Row="1"/>
+
+		<Label Content="First IP:" Style="{StaticResource propNameStyle}" Grid.Column="0" Grid.Row="2" 
+			Target="{Binding txtbxFirstIP}" ToolTip="First usable IP in network."/>
+		<TextBox x:Name="txtbxFirstIP" Style="{StaticResource propValueStyle}" Grid.Column="1" Grid.Row="2"/>
+
+		<Label Content="Last IP:" Style="{StaticResource propNameStyle}" Grid.Column="0" Grid.Row="3" 
+			Target="{Binding txtbxLastIP}" ToolTip="Last usable IP in network."/>
+		<TextBox x:Name="txtbxLastIP" Style="{StaticResource propValueStyle}" Grid.Column="1" Grid.Row="3"/>
+
+		<Label Content="Subnet mask:" Style="{StaticResource propNameStyle}" Grid.Column="0" Grid.Row="4" 
+			Target="{Binding txtbxSubnet}" ToolTip="Masks the bytes used for the network that cant be used for hosts."/>
+		<TextBox x:Name="txtbxSubnet" Style="{StaticResource propValueStyle}" Grid.Column="1" Grid.Row="4"/>
+
+		<Label Content="Wildcard mask:" Style="{StaticResource propNameStyle}" Grid.Column="0" Grid.Row="5" 
+			Target="{Binding txtbxWildcard}" ToolTip="Masks the bytes used for the hosts that arent used to specify the network."/>
+		<TextBox x:Name="txtbxWildcard" Style="{StaticResource propValueStyle}" Grid.Column="1" Grid.Row="5"/>
+
+		<Label Content="Hosts:" Style="{StaticResource propNameStyle}" Grid.Column="0" Grid.Row="6" 
+			Target="{Binding txtbxHosts}" ToolTip="Amount of useable hosts inside the network."/>
+		<TextBox x:Name="txtbxHosts" Style="{StaticResource propValueStyle}" Grid.Column="1" Grid.Row="6"/>
+
+	</Grid>
+	</Border>
+	
+</DockPanel>
+</Border>
 </Window>

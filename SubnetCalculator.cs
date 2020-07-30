@@ -22,6 +22,8 @@ namespace SubnetCalculatorGUI
         private UInt32 networkID;
         private UInt32 broadcast;
 
+        private UInt32 hosts;
+
         public SubnetCalculator() { calculate(); }
         public string Ip
         {
@@ -67,6 +69,8 @@ namespace SubnetCalculatorGUI
             //ip range
             firstIp = networkID + 1;
             lastIp = broadcast - 1;
+
+            hosts = wildcardMask -1;
 
        
         }
@@ -121,6 +125,11 @@ namespace SubnetCalculatorGUI
         public string SubnetMask
         {
             get { return IpToString(subnetMask); }
+        }
+
+        public string Hosts
+        {
+            get { return hosts.ToString(); }
         }
 
 
