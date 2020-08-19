@@ -1,11 +1,11 @@
 # SubnetCalculator  
 SubnetCalculator is a program to plan and calculate the size of your network.  
 
-![image](properties/Demo.gif)
+![image](Properties/Demo.gif)
 
 ## Installation
 
-**You can get the latest version by clicking [here]().**
+**You can get the latest version by clicking [here](https://github.com/WilcoMatthijssen/SubnetCalculator/blob/master/SubnetCalculator.exe).**
 
 Works on Windows 10. Other programs could work but I havent tested those.
 
@@ -22,33 +22,33 @@ The IP address are 4 numbers between 0 and 255 and separated by dots. It can by 
 
 The prefix is a number between 8 and 30 and can be set by typing it in the prefix textbox (the area after the / in the top purple box) or the slider below that.  
 
-![image](properties/Prefixdemo.PNG)
-![image](properties/Prefixdemo1.PNG)
+![image](Properties/Prefixdemo.PNG)
+![image](Properties/Prefixdemo1.PNG)
 
 When thats done it automaticly calculates all the things seen below.
 
 - Network ID  
 Network ID is the portion of an IP address that identifies the TCP/IP network on which a host resides.  
-![image](properties/NtwrkID.PNG)
+![image](Properties/NtwrkID.PNG)
 
 
 - Broadcast ID  
 Broadcast address is the last address in the network, and it is used for addressing all the nodes in the network at the same time.  
-![image](properties/NtwrkID.PNG)
+![image](Properties/NtwrkID.PNG)
 
 
 - First IP & Last IP  
 First and last usable IP in network.  
-![image](properties/IPRange.PNG)
+![image](Properties/IPRange.PNG)
 
 
 - Subnet mask & Wildcard mask  
 Bits specifying what is used for the network/subnet and what isnt.
-![image](properties/Mask.PNG)
+![image](Properties/Mask.PNG)
 
 - Hosts  
 Amount of useable hosts with this network.  
-![image](properties/Hosts.PNG)
+![image](Properties/Hosts.PNG)
 
 
 ## Future developments
