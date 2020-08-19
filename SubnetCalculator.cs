@@ -46,7 +46,7 @@ namespace SubnetCalculatorGUI
             get { return prefix; }
             set
             {
-                if (value > 0 && value < 32)
+                if (value > 0 && value <= 30)
                 {
                     prefix = value;
  
@@ -134,4 +134,10 @@ namespace SubnetCalculatorGUI
 
 
     }
+
+    //public class SubnetCalculatorString: SubnetCalculator
+    //{
+
+    //}
+
 }

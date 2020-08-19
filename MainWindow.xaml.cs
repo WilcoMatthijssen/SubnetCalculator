@@ -42,89 +42,59 @@ namespace SubnetCalculatorGUI
     public partial class MainWindow : Window
     {
         bool isInitialized = false;
+        SubnetCalculator calc = new SubnetCalculator();
 
         public MainWindow()
         {
             InitializeComponent();
             isInitialized = true;
-            //for (UInt16 i = 8; i <= 30; ++i)
-            //{
-            //    Cbx item = new Cbx();
-            //    item.Value = i;
-            //    prefixCbx.Items.Add(item);
-            //}
-            //prefixCbx.SelectedIndex = 0;
-
-
+ 
+            // Change all input to default values from calc.
             IP.Text = calc.Ip;
             Prefix.Text = calc.Prefix.ToString();
             PrefixSlider.Value = (double) calc.Prefix;
-            Refresh();
-            // MessageBox.Show((prefixCbx.SelectedItem as ComboboxItem).Value.ToString());
 
+            // Refresh display with updated values.
+            Refresh();
         }
 
-        SubnetCalculator calc = new SubnetCalculator();
-
-        private void IP_LostFocus(object sender, RoutedEventArgs e)
-        {
-            var parent = VisualTreeHelper.GetParent((DependencyObject)sender);
-
-            var textbox = sender as TextBox;
-            calc.Ip = textbox.Text;
-
-            Console.WriteLine(parent);
-
-            Refresh();
-        
-        }
-
-
+  
+        // Refresh display with updated values.
         private void Refresh()
         {
-
-           
-
             if (isInitialized)
             { 
-               // IP.Tag = calc.Ip;
-                //Prefix.Tag = "/ " + calc.Prefix;
-
                 txtbxNetworkID.Text = calc.NetworkID;
                 txtbxBroadcast.Text = calc.BroadCast;
 
-                txtbxFirstIP.Text = calc.FirstIp;
-                txtbxLastIP.Text = calc.LastIp;
+                txtbxFirstIP.Text   = calc.FirstIp;
+                txtbxLastIP.Text    = calc.LastIp;
 
-
-                txtbxSubnet.Text = calc.SubnetMask;
-                txtbxWildcard.Text = calc.WildcardMask;
-
-                txtbxHosts.Text = calc.Hosts;
+                txtbxSubnet.Text    = calc.SubnetMask;
+                txtbxWildcard.Text  = calc.WildcardMask;
+                txtbxHosts.Text     = calc.Hosts;
             }
             
         }
 
 
-
- 
-
-
+        // Give changed subnet mask to calc and refresh displayed information.
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            var slider = sender as Slider;
-            calc.Prefix = (ushort) slider.Value;
-            Prefix.Text = calc.Prefix.ToString();
-            this.Refresh();
+            //Prevent prefix from being changed while selected
+            if (!Prefix.IsSelectionActive)
+            {
+                var slider = sender as Slider;
+                calc.Prefix = (ushort) slider.Value;
+                Prefix.Text = calc.Prefix.ToString();
+                this.Refresh();
+            }
         }
+
 
         private void InputChanged(object sender, TextChangedEventArgs e)
         {
             var textbox = sender as TextBox;
-
-
-            
-
             if(textbox.Name == "IP")
             {
                 calc.Ip = IP.Text;
@@ -161,10 +131,20 @@ namespace SubnetCalculatorGUI
 
         }
 
+        // Only allow number or dots in text.
         private void InputPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9.]+");
             e.Handled = regex.IsMatch(e.Text);
         }
+
+
+        // Open browser with given hyperlink.
+        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            System.Diagnostics.Process.Start(e.Uri.AbsoluteUri);
+        }
+
+        
     }
 }
