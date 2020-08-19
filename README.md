@@ -18,7 +18,7 @@ The IP
 
 The IP address are 4 numbers between 0 and 255 and separated by dots. It can by set by typing it in the left part of the top purple box.  
 
-![image](properties/IPdemo.PNG)
+![image](Properties/IPdemo.PNG)
 
 The prefix is a number between 8 and 30 and can be set by typing it in the prefix textbox (the area after the / in the top purple box) or the slider below that.  
 
