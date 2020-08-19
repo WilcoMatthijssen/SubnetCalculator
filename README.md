@@ -43,7 +43,7 @@ First and last usable IP in network.
 
 
 - Subnet mask & Wildcard mask  
-Bits specifying what is used for the network/subnet and what isnt.
+Bits specifying what is used for the network/subnet and what isnt.  
 ![image](Properties/Mask.PNG)
 
 - Hosts  
