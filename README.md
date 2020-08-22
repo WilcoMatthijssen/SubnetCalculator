@@ -7,7 +7,7 @@ SubnetCalculator is a program to plan and calculate the size of your network.
 
 **You can get the latest version by clicking [here](https://github.com/WilcoMatthijssen/SubnetCalculator/blob/master/SubnetCalculator.exe).**
 
-Works on Windows 10. Other programs could work but I havent tested those.
+Works on Windows 10. Other operating systems could work but I havent tested it.
 
 *This program is unsigned which means Windows will complain that this program could be unsafe. Reason for it not being published properly is that I didn't want to spend money on completing the signing process.*
   
@@ -16,7 +16,7 @@ Works on Windows 10. Other programs could work but I havent tested those.
 For the subnetcalculator to work it needs 2 things: an **IP address** and a **prefix**.  
 The IP
 
-The IP address are 4 numbers between 0 and 255 and separated by dots. It can by set by typing it in the left part of the top purple box.  
+The IP address box allows public and private IP addresses. It can by set by typing it in the left part of the top purple box.  
 
 ![image](Properties/IPdemo.PNG)
 
