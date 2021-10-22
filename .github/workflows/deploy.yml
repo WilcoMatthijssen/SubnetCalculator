@@ -3,10 +3,10 @@ name: "Deploy Class Commands"
 on:
   push:
     tags:
-      - "class-commands/v*"
+      - "v*"
 
 env:
-  PROJECT_PATH: ClassCommands/ClassCommands.csproj
+  PROJECT_PATH: SubnetCalculator.csproj
 
 jobs:
   deploy:
