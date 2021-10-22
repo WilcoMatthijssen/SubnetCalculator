@@ -135,6 +135,8 @@ namespace SubnetCalculatorGUI
 
     }
 
+
+
     //public class SubnetCalculatorString: SubnetCalculator
     //{
 
