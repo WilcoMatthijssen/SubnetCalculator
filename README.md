@@ -9,7 +9,7 @@ SubnetCalculator is a program to plan and calculate the size of your network.
 
 Works on Windows 10. Other operating systems could work but I havent tested it.
 
-*This program is unsigned which means Windows will complain that this program could be unsafe. Reason for it not being published properly is that I didn't want to spend money on completing the signing process.*
+*This program is unsigned which means Windows will complain that this program could be unsafe.*
   
 
 ## How to use
